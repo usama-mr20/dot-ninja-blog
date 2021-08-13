@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -59,7 +59,7 @@ const SignUp = (props) => {
   // const [isLoading, setIsLoading] = useState(false);
   // const [disableSigninBtn, setDisableSigninBtn] = useState(false);
 
-  const [indicator, setIndicator] = useState();
+  // const [indicator, setIndicator] = useState();
   // const setLoadingOff = () => {
   //   setIsLoading(false);
   //   setDisableSigninBtn(false);
