@@ -14,13 +14,20 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     color: "white",
-    fontSize: "28px",
+    fontSize: "16px",
     textDecoration: "none",
     fontWeight: "bold",
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "28px",
+    },
   },
+
   toolbar: {
-    marginLeft: theme.spacing(8),
+    marginLeft: theme.spacing(0),
     marginRight: theme.spacing(8),
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(8),
+    },
   },
 }));
 

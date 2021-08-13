@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,7 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-// import ReactLoading from "react-loading";
+import ReactLoading from "react-loading";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -56,14 +56,8 @@ const SignUp = (props) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [disableSigninBtn, setDisableSigninBtn] = useState(false);
-
-  // const [indicator, setIndicator] = useState();
-  // const setLoadingOff = () => {
-  //   setIsLoading(false);
-  //   setDisableSigninBtn(false);
-  // };
+  const [isLoading, setIsLoading] = useState(false);
+  const [disableSigninBtn, setDisableSigninBtn] = useState(false);
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value);
@@ -78,23 +72,25 @@ const SignUp = (props) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
+  const setOff = () => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setDisableSigninBtn(false);
+    }, 1500);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setIsLoading(true);
-    // setDisableSigninBtn(true);
+    setIsLoading(true);
+    setDisableSigninBtn(true);
     props.signUp({ firstName, lastName, email, password });
-    // if (indicator) {
-    //   setIndicator(false);
-    // } else if (!indicator) {
-    //   setIndicator(true);
-    // }
+    setOff();
   };
-  // useEffect(() => {
-  //   if (props.authErr !== null) {
-  //     setLoadingOff();
-  //   }
-  // }, [props.authErr, indicator]);
+  useEffect(() => {
+    if (props.authErr !== null) {
+      setIsLoading(false);
+      setDisableSigninBtn(false);
+    }
+  }, [props.authErr]);
 
   const { auth } = props;
   if (auth.uid) return <Redirect to="/" />;
@@ -174,10 +170,10 @@ const SignUp = (props) => {
             variant="contained"
             color="secondary"
             className={classes.submit}
-            // disabled={disableSigninBtn}
+            disabled={disableSigninBtn}
           >
             Sign Up
-            {/* {isLoading && (
+            {isLoading && (
               <div style={{ marginLeft: "8px" }}>
                 <ReactLoading
                   type={"spin"}
@@ -186,7 +182,7 @@ const SignUp = (props) => {
                   width={25}
                 />
               </div>
-            )} */}
+            )}
           </Button>
           <div style={{ color: "red" }}>
             {props.authErr ? <p>{props.authErr}</p> : null}

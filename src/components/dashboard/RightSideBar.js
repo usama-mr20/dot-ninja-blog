@@ -48,7 +48,7 @@ const RightSideBar = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            A very simple yet powerful blog made in React-Js and integrated with
+            A very simple yet powerful blog made in React JS, Redux and
             Firebase. <br />
             Try make a new blog post and see the magic.
             <br />

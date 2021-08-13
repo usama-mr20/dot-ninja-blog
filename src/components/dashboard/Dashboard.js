@@ -35,7 +35,7 @@ const Dashboard = (props) => {
             <PostList posts={props.posts} />
           </Grid>
         ) : (
-          <Grid item xs={12} md={8} justifyContent="center">
+          <Grid item xs={12} md={8}>
             <SkeletonScreen />
             <SkeletonScreen />
             <SkeletonScreen />
