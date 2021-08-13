@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import { connect } from "react-redux";
 import { signIn } from "../../store/actions/AuthActions";
 import { Redirect } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 function Copyright() {
   return (
@@ -52,7 +53,15 @@ const useStyles = makeStyles((theme) => ({
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [disableSigninBtn, setDisableSigninBtn] = useState(false);
 
+  const setOff = () => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setDisableSigninBtn(false);
+    }, 1500);
+  };
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -63,9 +72,18 @@ const SignIn = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
+    setDisableSigninBtn(true);
     props.signIn({ email, password });
+    setOff();
   };
+
+  useEffect(() => {
+    if (props.authErr !== null) {
+      setIsLoading(false);
+      setDisableSigninBtn(false);
+    }
+  }, [props.authErr]);
 
   const classes = useStyles();
   const { auth } = props;
@@ -117,8 +135,19 @@ const SignIn = (props) => {
             variant="contained"
             color="secondary"
             className={classes.submit}
+            disabled={disableSigninBtn}
           >
             Sign In
+            {isLoading && (
+              <div style={{ marginLeft: "8px" }}>
+                <ReactLoading
+                  type={"spin"}
+                  color={"#F50057"}
+                  height={25}
+                  width={25}
+                />
+              </div>
+            )}
           </Button>
           <div style={{ color: "red" }}>
             {props.authError ? <p>{props.authError}</p> : null}
